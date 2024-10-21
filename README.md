@@ -31,13 +31,7 @@ from os import getcwd
 # GRADED FUNCTION: train_val_datasets
 
 def train_val_datasets():
-    """Creates training and validation datasets
-
-    Returns:
-        (tf.data.Dataset, tf.data.Dataset): training and validation datasets
-    """
-
-    ### START CODE HERE ###
+    
 
     training_dataset = tf.keras.utils.image_dataset_from_directory( 
         directory='/content/horse-or-human.zip/',
@@ -83,8 +77,6 @@ last_layer = pre_trained_model.get_layer('mixed7')
 print('last layer output shape: ', last_layer.output.shape)
 last_output = last_layer.output
 
-# Expected Output:
-# ('last layer output shape: ', (None, 7, 7, 768))
 
 # Define a Callback class that stops training once accuracy reaches 99.9%
 class EarlyStoppingCallback(tf.keras.callbacks.Callback):
@@ -96,17 +88,7 @@ class EarlyStoppingCallback(tf.keras.callbacks.Callback):
 # GRADED FUNCTION: output_of_last_layer
 
 def output_of_last_layer(pre_trained_model):
-    """Fetches the output of the last desired layer of the pre-trained model
-
-    Args:
-        pre_trained_model (tf.keras.Model): pre-trained model
-
-    Returns:
-        tf.keras.KerasTensor: last desired layer of pretrained model
-    """
-    ### START CODE HERE ###
-
-    last_desired_layer = pre_trained_model.get_layer('mixed7')
+        last_desired_layer = pre_trained_model.get_layer('mixed7')
     last_output = last_desired_layer.output
     
     print('last layer output shape: ', last_output.shape)
@@ -189,11 +171,6 @@ print(len(train_humans_fnames))
 print(len(validation_horses_fnames))
 print(len(validation_humans_fnames))
 
-# Expected Output:
-# 500
-# 527
-# 128
-# 128
 
 # Add our data-augmentation parameters to ImageDataGenerator
 train_datagen = ImageDataGenerator(rescale = 1/255,
@@ -223,13 +200,6 @@ validation_generator =  test_datagen.flow_from_directory(validation_dir,
                                                         batch_size =20,
                                                         class_mode = 'binary',
                                                         shuffle = False)
-
-# Expected Output:
-# Found 1027 images belonging to 2 classes.
-# Found 256 images belonging to 2 classes.
-
-# Run this and see how many epochs it should take before the callback
-# fires, and stops training at 97% accuracy
 
 callbacks = EarlyStoppingCallback()
 history = model.fit(train_generator,
